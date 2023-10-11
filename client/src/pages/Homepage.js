@@ -9,6 +9,9 @@ import {
   TabPanels,
   TabPanel,
 } from "@chakra-ui/react";
+
+import Login from "../components/Authentication/Login";
+import Signup from "../components/Authentication/Signup";
 const Homepage = () => {
   return (
     <Container maxW="xl" justifyContent={"center"}>
@@ -33,8 +36,12 @@ const Homepage = () => {
             <Tab>Sign Up</Tab>
           </TabList>
           <TabPanels>
-            <TabPanel>{/* <Login /> */}</TabPanel>
-            <TabPanel>{/* <Signup /> */}</TabPanel>
+            <TabPanel>
+              <Login />
+            </TabPanel>
+            <TabPanel>
+              <Signup />
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
