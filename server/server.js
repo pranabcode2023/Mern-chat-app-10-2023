@@ -6,10 +6,10 @@ const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
 
 dotenv.config();
-
+//NOTE - call function to connect MongoDB
 connectMongoDB();
 const app = express();
-
+//NOTE - to accept json data
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("API is Running Successfully");
