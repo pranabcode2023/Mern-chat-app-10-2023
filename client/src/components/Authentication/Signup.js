@@ -11,10 +11,15 @@ import React, { useState } from "react";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
+  //eslint-disable-next-line
   const [name, setName] = useState();
+  //eslint-disable-next-line
   const [email, setEmail] = useState();
+  //eslint-disable-next-line
   const [confirmpassword, setConfirmpassword] = useState();
+  //eslint-disable-next-line
   const [password, setPassword] = useState();
+  //eslint-disable-next-line
   const [pic, setPic] = useState();
 
   const handleClick = () => setShow(!show);

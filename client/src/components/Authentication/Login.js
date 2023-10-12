@@ -11,12 +11,13 @@ import React, { useState } from "react";
 
 const Login = () => {
   const [show, setShow] = useState(false);
-
+  //eslint-disable-next-line
   const [email, setEmail] = useState();
+  //eslint-disable-next-line
   const [password, setPassword] = useState();
 
   const handleClick = () => setShow(!show);
-
+  //eslint-disable-next-line
   const postDetails = () => {};
 
   const submitHandler = () => {};
