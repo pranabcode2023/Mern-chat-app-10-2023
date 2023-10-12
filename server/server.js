@@ -5,10 +5,12 @@ const connectMongoDB = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
 
-const app = express();
 dotenv.config();
 
 connectMongoDB();
+const app = express();
+
+app.use(express.json());
 app.get("/", (req, res) => {
   res.send("API is Running Successfully");
 });
