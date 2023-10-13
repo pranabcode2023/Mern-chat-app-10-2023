@@ -9,7 +9,7 @@
   "author": "Pranab Kumar Pramanik",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "concurrently": "^8.2.1",
     "dotenv": "^16.3.1",
