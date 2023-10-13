@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
+//NOTE - userSchema
 const userSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -21,6 +23,21 @@ const userSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+//NOTE - Match Password
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+//NOTE - function encrypt the password and stored in database not in plan format
+userSchema.pre("save", async function name(next) {
+  if (!this.mdified) {
+    next();
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
 const User = mongoose.model("User", userSchema);
 
