@@ -9,6 +9,7 @@
   "author": "Pranab Kumar Pramanik",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.5.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.41.0",
     "colors": "^1.4.0",
