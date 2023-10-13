@@ -31,7 +31,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 
 //NOTE - function encrypt the password and stored in database not in plan format
 userSchema.pre("save", async function name(next) {
-  if (!this.mdified) {
+  if (!this.isModified) {
     next();
   }
 
