@@ -4,6 +4,7 @@ const { chats } = require("./data/data");
 const connectMongoDB = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 dotenv.config();
 //NOTE - call function to connect MongoDB
@@ -25,8 +26,12 @@ app.get("/", (req, res) => {
 //   const singleChat = chats.find((c) => c._id === req.params.id);
 //   res.send(singleChat);
 // });
-
+//NOTE - userRoutes
 app.use("/api/user", userRoutes);
+
+//NOTE - error handling
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(5000, console.log(`Server started on port ${PORT}`.bgBlue.bold));
