@@ -6,25 +6,70 @@ import {
   InputGroup,
   InputRightElement,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
 const Signup = () => {
-  const [show, setShow] = useState(false);
-  //eslint-disable-next-line
-  const [name, setName] = useState();
-  //eslint-disable-next-line
-  const [email, setEmail] = useState();
-  //eslint-disable-next-line
-  const [confirmpassword, setConfirmpassword] = useState();
-  //eslint-disable-next-line
-  const [password, setPassword] = useState();
-  //eslint-disable-next-line
-  const [pic, setPic] = useState();
-
   const handleClick = () => setShow(!show);
+  const toast = useToast();
+  const [show, setShow] = useState(false);
 
-  const postDetails = () => {};
+  const [name, setName] = useState();
+
+  const [email, setEmail] = useState();
+
+  const [confirmpassword, setConfirmpassword] = useState();
+
+  const [password, setPassword] = useState();
+
+  const [pic, setPic] = useState();
+  const [Loading, setLoading] = useState(false);
+
+  const uploadImage = (pics) => {
+    setLoading(true);
+    if (pics === undefined) {
+      toast({
+        title: "Please Select an Image!",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+    }
+    console.log(pics);
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "chat-app-2023");
+      data.append("cloud_name", "pranabapp");
+      fetch("https://api.cloudinary.com/v1_1/pranabapp/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPic(data.url.toString());
+          console.log(data.url.toString());
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    } else {
+      toast({
+        title: "Please Select an Image!",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+      return;
+    }
+  };
 
   const submitHandler = () => {};
 
@@ -81,7 +126,7 @@ const Signup = () => {
           type="file"
           p={1.5}
           accept="image/*"
-          onChange={(e) => postDetails(e.target.files[0])}
+          onChange={(e) => uploadImage(e.target.files[0])}
         />
       </FormControl>
       <Button
@@ -89,6 +134,7 @@ const Signup = () => {
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
+        isLoading={Loading}
       >
         Signup
       </Button>
