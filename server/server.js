@@ -4,6 +4,7 @@ const { chats } = require("./data/data");
 const connectMongoDB = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 dotenv.config();
@@ -16,6 +17,17 @@ app.get("/", (req, res) => {
   res.send("API is Running Successfully");
 });
 
+//NOTE - userRoutes, chatroutes
+app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
+
+//NOTE - error handling
+app.use(notFound);
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 5000;
+app.listen(5000, console.log(`Server started on port ${PORT}`.bgBlue.bold));
+
 //NOTE - test purpose
 // app.get("/api/chat", (req, res) => {
 //   res.send(chats);
@@ -26,12 +38,3 @@ app.get("/", (req, res) => {
 //   const singleChat = chats.find((c) => c._id === req.params.id);
 //   res.send(singleChat);
 // });
-//NOTE - userRoutes
-app.use("/api/user", userRoutes);
-
-//NOTE - error handling
-app.use(notFound);
-app.use(errorHandler);
-
-const PORT = process.env.PORT || 5000;
-app.listen(5000, console.log(`Server started on port ${PORT}`.bgBlue.bold));
