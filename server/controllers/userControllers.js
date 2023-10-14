@@ -51,6 +51,27 @@ const authUser = asyncHandler(async (req, res) => {
       pic: user.pic,
       token: generateToken(user._id),
     });
+  } else {
+    res.status(401);
+    throw new Error("Invalid Email or Password");
   }
 });
-module.exports = { registerUser, authUser };
+//NOTE - All users
+const allUsers = asyncHandler(async (req, res) => {
+  //NOTE - The $oroperator performs a logical OR operation on an array of one or more <expressions>
+  //and selects the documents that satisfy at least one of the<expressions>.
+
+  //NOTE - $regex Provides regular expression capabilities for pattern matching strings in queries.
+
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+  res.send(users);
+});
+module.exports = { registerUser, authUser, allUsers };
