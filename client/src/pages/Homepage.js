@@ -25,7 +25,7 @@ const Homepage = () => {
   }, [history]);
 
   return (
-    <Container maxW="xl" justifyContent={"center"}>
+    <Container color={"black"} maxW="xl" justifyContent={"center"}>
       <Box
         display={"flex"}
         justifyContent="center"
@@ -37,7 +37,7 @@ const Homepage = () => {
         borderWidth="1px"
       >
         <Text fontSize="4xl" fontFamily="Work sans">
-          Chat App
+          Chat-App
         </Text>
       </Box>
       <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
