@@ -27,7 +27,7 @@ const Homepage = () => {
   return (
     <Container maxW="xl" justifyContent={"center"}>
       <Box
-        d="flex"
+        display={"flex"}
         justifyContent="center"
         p={3}
         bg="white"
@@ -36,7 +36,7 @@ const Homepage = () => {
         borderRadius="lg"
         borderWidth="1px"
       >
-        <Text fontSize="4xl" fontFamily="Work sans" marginLeft={"180"}>
+        <Text fontSize="4xl" fontFamily="Work sans">
           Chat App
         </Text>
       </Box>
