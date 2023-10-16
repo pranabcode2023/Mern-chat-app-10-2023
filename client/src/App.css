@@ -2,8 +2,8 @@
 .App{
     min-height: 100vh;
     display: flex;
-    /* background-image: url('./background1.jpg'); */
+    background-image: url('./background1.jpg');
     background-size: cover;
     background-position: center;
-    color: black;
+    color: white;
 }
