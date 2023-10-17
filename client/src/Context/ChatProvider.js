@@ -7,7 +7,7 @@ const ChatProvider = ({ children }) => {
   //NOTE - this useState i can use for whole app bcoz it pass ass value inside chatcontext provider
   const [user, setUser] = useState();
   const [selectedChat, setSelectedChat] = useState();
-  const [chats, setChats] = useState();
+  const [chats, setChats] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
