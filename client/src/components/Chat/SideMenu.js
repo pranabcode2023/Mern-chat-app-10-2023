@@ -25,6 +25,8 @@ import { ChatState } from "../../Context/ChatProvider";
 import ProfileModal from "./ProfileModal";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import ChatLoading from "./ChatLoading";
+import UserListItem from "../UserAvatar/UserListItem";
 
 const SideMenu = () => {
   const [search, setSearch] = useState("");
@@ -32,16 +34,20 @@ const SideMenu = () => {
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
 
-  const { user } = ChatState();
+  const { user, setSelectedChat, chats, setChats } = ChatState();
   const history = useHistory();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
-  const logotHandler = () => {
+  //NOTE - logoutHandler
+  const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     history.push("/");
   };
-  const toast = useToast();
+
+  //NOTE - handleSearch
+
   const handleSearch = async () => {
     if (!search) {
       toast({
@@ -66,13 +72,39 @@ const SideMenu = () => {
     } catch (error) {
       toast({
         title: "Something went wrong ",
-        status: "warning",
+        status: "error",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
     }
   };
+  //NOTE - accessChat
+  const accessChat = async (userId) => {
+    try {
+      setLoadingChat(true);
+
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.post("/api/chat", { userId }, config);
+      setSelectedChat(data);
+      setLoadingChat(false);
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error while fetching the chat",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    }
+  };
+
   return (
     <>
       <Flex
@@ -122,7 +154,7 @@ const SideMenu = () => {
                 <MenuItem color={"black"}>My Profile</MenuItem>
               </ProfileModal>
               <MenuDivider />
-              <MenuItem color={"black"} onClick={logotHandler}>
+              <MenuItem color={"black"} onClick={logoutHandler}>
                 Log Out
               </MenuItem>
             </MenuList>
@@ -143,14 +175,25 @@ const SideMenu = () => {
               />
               <Button onClick={handleSearch}>Go</Button>
             </Box>
+            {loading ? (
+              <ChatLoading />
+            ) : (
+              searchResult?.map((user) => (
+                <UserListItem
+                  key={user._id}
+                  user={user}
+                  handleFunction={() => accessChat(user._id)}
+                />
+              ))
+            )}
           </DrawerBody>
 
-          <DrawerFooter>
+          {/* <DrawerFooter>
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
             <Button colorScheme="blue">Save</Button>
-          </DrawerFooter>
+          </DrawerFooter> */}
         </DrawerContent>
       </Drawer>
     </>
