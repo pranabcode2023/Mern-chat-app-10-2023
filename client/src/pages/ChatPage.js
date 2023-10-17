@@ -2,7 +2,7 @@ import { ChatState } from "../Context/ChatProvider";
 import SideMenu from "../components/Chat/SideMenu";
 import MyChats from "../components/Chat/MyChats";
 import ChatBox from "../components/Chat/ChatBox";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useState } from "react";
 
 const ChatPage = () => {
