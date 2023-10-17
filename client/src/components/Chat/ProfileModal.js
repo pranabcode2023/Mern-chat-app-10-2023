@@ -23,7 +23,7 @@ const ProfileModal = ({ user, children }) => {
       ) : (
         <IconButton
           d={{ base: "flex" }}
-          icon={<i class="fas fa-eye"></i>}
+          icon={<i className="fas fa-eye"></i>}
           onClick={onOpen}
         />
       )}
