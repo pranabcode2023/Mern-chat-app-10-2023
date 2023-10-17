@@ -16,7 +16,7 @@ const UserBadgeItem = ({ user, handleFunction, admin }) => {
     >
       {user.name}
       {admin === user._id && <span> (Admin)</span>}
-      <i class="far fa-window-close fa-rotate-90 fa-lg"></i>
+      <i className="far fa-window-close fa-rotate-90 fa-lg" />
     </Badge>
   );
 };
