@@ -142,7 +142,7 @@ const SideMenu = () => {
           <Menu>
             <MenuButton
               as={Button}
-              rightIcon={<i class="fa-solid fa-chevron-down"></i>}
+              rightIcon={<i className="fa-solid fa-chevron-down"></i>}
             >
               {/* //NOTE - Avatar for round prifile picture  */}
               <Avatar
