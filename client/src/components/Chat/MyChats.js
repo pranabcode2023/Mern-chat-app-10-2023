@@ -68,7 +68,7 @@ const MyChats = () => {
           <Button
             d="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-            rightIcon={<i class="fa fa-plus" aria-hidden="true"></i>}
+            rightIcon={<i className="fa fa-plus" aria-hidden="true"></i>}
           >
             New Group Chat
           </Button>
