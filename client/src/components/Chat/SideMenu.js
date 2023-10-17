@@ -15,6 +15,7 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Spinner,
   Text,
   Tooltip,
   useDisclosure,
@@ -91,6 +92,8 @@ const SideMenu = () => {
         },
       };
       const { data } = await axios.post("/api/chat", { userId }, config);
+      //NOTE - find function / to find the chat and update the chat
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
@@ -186,14 +189,9 @@ const SideMenu = () => {
                 />
               ))
             )}
-          </DrawerBody>
 
-          {/* <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter> */}
+            {loadingChat && <Spinner ml="auto" d="flex" />}
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
