@@ -5,6 +5,7 @@ const connectMongoDB = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 //NOTE - userRoutes, chatroutes
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 
 //NOTE - error handling
 app.use(notFound);
