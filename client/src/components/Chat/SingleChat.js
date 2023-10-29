@@ -2,24 +2,59 @@ import React, { useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import {
   Box,
-  Center,
   FormControl,
   IconButton,
   Input,
   Spinner,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { getSender, getSenderFull } from "../../config/ChatLogic";
 import ProfileModal from "./ProfileModal";
 import UpdateGroupChatModal from "./UpdateGroupChatModal";
-
+import axios from "axios";
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState();
+
+  const toast = useToast();
   const { user, selectedChat, setSelectedChat } = ChatState();
 
-  const sendMessage = () => {};
+  const sendMessage = async (event) => {
+    if (event.key === "Enter" && newMessage) {
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        setNewMessage("");
+        const { data } = await axios.post(
+          "/api/message",
+          {
+            content: newMessage,
+            chatId: selectedChat._id,
+          },
+          config
+        );
+
+        console.log(data);
+
+        setMessages([...messages, data]);
+      } catch (error) {
+        toast({
+          title: "Error Occured!",
+          description: "Failed to send the Message",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+      }
+    }
+  };
   const typinMessageHandler = (e) => {
     setNewMessage(e.target.value);
 
