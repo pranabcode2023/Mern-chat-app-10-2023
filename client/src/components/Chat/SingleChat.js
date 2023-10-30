@@ -15,10 +15,16 @@ import UpdateGroupChatModal from "./UpdateGroupChatModal";
 import axios from "axios";
 import "../Styles/Styles.css";
 import ScrollableChat from "./ScrollableChat";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5000";
+let socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState();
+
+  const [socketConnected, setSocketConnected] = useState(false);
 
   const toast = useToast();
   const { user, selectedChat, setSelectedChat } = ChatState();
@@ -41,6 +47,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       // console.log(messages);
       setMessages(data);
       setLoading(false);
+
+      socket.emit("join chat", selectedChat._id);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -52,11 +60,34 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       });
     }
   };
+  // console.log(messages);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connection", () => setSocketConnected(true));
+    //eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     fetchMessages();
+
+    selectedChatCompare = selectedChat;
     //eslint-disable-next-line
   }, [selectedChat]);
+
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageRecieved.chat._id
+      ) {
+        //notification
+      } else {
+        setMessages([...messages, newMessageRecieved]);
+      }
+    });
+  });
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
@@ -78,7 +109,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         );
 
         console.log(data);
-
+        socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -92,6 +123,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     }
   };
+
   const typinMessageHandler = (e) => {
     setNewMessage(e.target.value);
 
