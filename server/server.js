@@ -7,6 +7,7 @@ const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
+const path = require("path");
 
 dotenv.config();
 //NOTE - call function to connect MongoDB
@@ -14,14 +15,32 @@ connectMongoDB();
 const app = express();
 //NOTE - to accept json data
 app.use(express.json());
-app.get("/", (req, res) => {
-  res.send("API is Running Successfully");
-});
+// app.get("/", (req, res) => {
+//   res.send("API is Running Successfully");
+// });
 
 //NOTE - userRoutes, chatroutes
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+
+// --------------------------deployment------------------------------
+
+const __dirname1 = path.resolve();
+
+if (process.env.NODE_ENV === "development") {
+  app.use(express.static(path.join(__dirname1, "../client/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is Running Successfully");
+  });
+}
+
+// --------------------------deployment------------------------------
 
 //NOTE - error handling
 app.use(notFound);
