@@ -7,7 +7,6 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Flex,
   Input,
   Menu,
   MenuButton,
@@ -20,13 +19,19 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+
+import { BellIcon, ChevronDownIcon, Search2Icon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import ProfileModal from "./ProfileModal";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import ChatLoading from "./ChatLoading";
+
 import UserListItem from "../UserAvatar/UserListItem";
+import { getSender } from "../../config/ChatLogic";
+// import NotificationBadge from "react-notification-badge";
+// import { Effect } from "react-notification-badge";
 
 const SideMenu = () => {
   const [search, setSearch] = useState("");
@@ -34,7 +39,14 @@ const SideMenu = () => {
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
 
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
   const history = useHistory();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -109,8 +121,8 @@ const SideMenu = () => {
 
   return (
     <>
-      <Flex
-        d="flex"
+      <Box
+        display="flex"
         justifyContent="space-between"
         alignItems="center"
         bg="white"
@@ -120,8 +132,8 @@ const SideMenu = () => {
       >
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant={"ghost"} onClick={onOpen}>
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <Text d={{ base: "none", md: "flex" }} px="4">
+            <Search2Icon />
+            <Text display={{ base: "none", md: "flex" }} px="4">
               Search User
             </Text>
           </Button>
@@ -133,16 +145,32 @@ const SideMenu = () => {
         <div>
           <Menu>
             <MenuButton p={1}>
-              <i class="fa-solid fa-bell"></i>
+              {/* <NotificationBadge
+                count={notification.length}
+                effect={Effect.SCALE}
+              /> */}
+              <BellIcon color="black" fontSize="2xl" m={1} />
             </MenuButton>
-            {/* <MenuList></MenuList> */}
+            <MenuList color={"black"} pl={2}>
+              {!notification.length && "No New Messages"}
+              {notification.map((notif) => (
+                <MenuItem
+                  key={notif._id}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotification(notification.filter((n) => n !== notif));
+                  }}
+                >
+                  {notif.chat.isGroupChat
+                    ? `New Message in ${notif.chat.chatName}`
+                    : `New Message from ${getSender(user, notif.chat.users)}`}
+                </MenuItem>
+              ))}
+            </MenuList>
           </Menu>
 
           <Menu>
-            <MenuButton
-              as={Button}
-              rightIcon={<i className="fa-solid fa-chevron-down"></i>}
-            >
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
               {/* //NOTE - Avatar for round prifile picture  */}
               <Avatar
                 size="sm"
@@ -162,7 +190,7 @@ const SideMenu = () => {
             </MenuList>
           </Menu>
         </div>
-      </Flex>
+      </Box>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
