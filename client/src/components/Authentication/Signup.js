@@ -6,8 +6,9 @@ import {
   InputGroup,
   InputRightElement,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
-import { VStack } from "@chakra-ui/layout";
+
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
