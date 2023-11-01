@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server/server.js",
-    "both": "concurrently \"nodemon server.js\" \"cd ../client && npm run start\"",
-    "build": "npm install && npm install client && npm run build client"
+    "both": "concurrently \"nodemon server.js\" \"cd ../client && npm run start\""
+
   },
   "author": "Pranab Kumar Pramanik",
   "license": "ISC",
