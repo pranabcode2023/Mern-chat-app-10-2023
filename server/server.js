@@ -16,9 +16,11 @@ connectMongoDB();
 const app = express();
 //NOTE - to accept json data
 app.use(express.json());
-app.get("/", (req, res) => {
-  res.send("API is Running Successfully");
-});
+
+//NOTE - comented out for render deployment
+// app.get("/", (req, res) => {
+//   res.send("API is Running Successfully");
+// });
 
 //NOTE - userRoutes, chatroutes
 app.use("/api/user", userRoutes);
