@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server/server.js",
-    "build": "npm run build"
+   
   },
   "author": "Pranab Kumar Pramanik",
   "license": "ISC",
