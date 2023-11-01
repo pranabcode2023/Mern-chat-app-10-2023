@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server/server.js",
-    "both": "concurrently \"nodemon server.js\" \"cd ../client && npm run start\""
-
+    "both": "concurrently \"nodemon server.js\" \"cd ../client && npm run start\"",
+    "build": "npm install --legacy-peer-deps && npm install --legacy-peer-deps --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Pranab Kumar Pramanik",
   "license": "ISC",
