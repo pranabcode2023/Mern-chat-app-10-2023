@@ -55,7 +55,7 @@ app.use("/api/message", messageRoutes);
 
 const __dirname1 = path.resolve();
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "development ") {
   app.use(express.static(path.join(__dirname1, "../client/build")));
 
   app.get("*", (req, res) =>
