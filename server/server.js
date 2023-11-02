@@ -15,6 +15,7 @@ dotenv.config();
 connectMongoDB();
 const app = express();
 //NOTE - to accept json data
+app.use(cors());
 app.use(express.json());
 
 //NOTE - comented out for render deployment
@@ -38,18 +39,18 @@ const allowedOrigins = [
   // process.env.VERCEL_CLIENT,
 ];
 
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (allowedOrigins.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-// };
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 
-app.use(cors(allowedOrigins));
-// app.use(cors(corsOptions));
+app.use(cors());
+app.use(cors(corsOptions));
 
 // --------------------------for render deployment------------------------------
 
