@@ -8,14 +8,13 @@ const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 const path = require("path");
-const cors = require("cors");
+// const cors = require("cors");
 
 dotenv.config();
 //NOTE - call function to connect MongoDB
 connectMongoDB();
 const app = express();
 //NOTE - to accept json data
-app.use(cors());
 app.use(express.json());
 
 //NOTE - comented out for render deployment
@@ -30,27 +29,27 @@ app.use("/api/message", messageRoutes);
 
 //NOTE - ----------------vercel deployment ---------------------
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://mern-chat-app-10-2023-client.vercel.app",
+// const allowedOrigins = [
+//   "http://localhost:3000",
+//   "https://mern-chat-app-10-2023-client.vercel.app",
 
-  //NOTE - url put into env file
-  // process.env.LOCALHOST_CLIENT,
-  // process.env.VERCEL_CLIENT,
-];
+//   //NOTE - url put into env file
+//   // process.env.LOCALHOST_CLIENT,
+//   // process.env.VERCEL_CLIENT,
+// ];
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (allowedOrigins.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+// };
 
-app.use(cors());
-app.use(cors(corsOptions));
+// app.use(cors());
+// app.use(cors(corsOptions));
 
 // --------------------------for render deployment------------------------------
 
