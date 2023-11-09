@@ -32,15 +32,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [isTyping, setIsTyping] = useState(false);
   const toast = useToast();
 
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-
   const { user, selectedChat, setSelectedChat, notification, setNotification } =
     ChatState();
 
@@ -239,10 +230,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               {isTyping ? (
                 <div>
                   <Lottie
-                    options={defaultOptions}
-                    // height={50}
-                    // width={70}
-                    style={{ marginBottom: 15, marginLeft: 0 }}
+                    animationData={animationData}
+                    loop={true}
+                    style={{
+                      marginBottom: 15,
+                      marginLeft: 0,
+                      height: 50,
+                      width: 70,
+                    }}
                   />
                 </div>
               ) : (
