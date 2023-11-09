@@ -30,7 +30,7 @@ app.use("/api/message", messageRoutes);
 //NOTE - ----------------vercel deployment ---------------------
 // app.use(
 //   cors({
-//     origin: ["https://mern-chat-app-client-two.vercel.app/"],
+//     origin: ["https://mern-chat-app-client-two.vercel.app"],
 //     methods: ["POST", "GET", "PUT", "DELETE"],
 //     credentials: true,
 //   })
