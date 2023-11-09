@@ -30,6 +30,7 @@ import ChatLoading from "./ChatLoading";
 
 import UserListItem from "../UserAvatar/UserListItem";
 import { getSender } from "../../config/ChatLogic";
+import { Badge } from "antd";
 // import NotificationBadge from "react-notification-badge";
 // import { Effect } from "react-notification-badge";
 
@@ -149,7 +150,10 @@ const SideMenu = () => {
                 count={notification.length}
                 effect={Effect.SCALE}
               /> */}
-              <BellIcon color="black" fontSize="2xl" m={1} />
+
+              <Badge count={notification?.length} showZero>
+                <BellIcon color="black" fontSize="2xl" m={1} />
+              </Badge>
             </MenuButton>
             <MenuList color={"black"} pl={2}>
               {!notification.length && "No New Messages"}
@@ -170,7 +174,7 @@ const SideMenu = () => {
           </Menu>
 
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            <MenuButton ml={3} as={Button} rightIcon={<ChevronDownIcon />}>
               {/* //NOTE - Avatar for round prifile picture  */}
               <Avatar
                 size="sm"
