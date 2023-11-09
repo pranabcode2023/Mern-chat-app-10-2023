@@ -91,7 +91,8 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 70000,
   cors: {
-    origin: ["http://localhost:3000", "https://chat-app-rfe4.onrender.com"],
+    origin: ["https://chat-app-rfe4.onrender.com"],
+    // origin: ["http://localhost:3000"],
   },
 });
 
