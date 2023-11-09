@@ -28,34 +28,34 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
 //NOTE - ----------------vercel deployment ---------------------
-app.use(
-  cors({
-    origin: ["https://mern-chat-app-client-two.vercel.app/"],
-    methods: ["POST", "GET", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
-// const allowedOrigins = [
-//   "http://localhost:3000",
-//   "https://mern-chat-app-10-2023-client.vercel.app",
+// app.use(
+//   cors({
+//     origin: ["https://mern-chat-app-client-two.vercel.app/"],
+//     methods: ["POST", "GET", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://mern-chat-app-10-2023-client.vercel.app",
 
-//   //NOTE - url put into env file
-//   // process.env.LOCALHOST_CLIENT,
-//   // process.env.VERCEL_CLIENT,
-// ];
+  //NOTE - url put into env file
+  // process.env.LOCALHOST_CLIENT,
+  // process.env.VERCEL_CLIENT,
+];
 
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (allowedOrigins.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-// };
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 
-// app.use(cors());
-// app.use(cors(corsOptions));
+app.use(cors());
+app.use(cors(corsOptions));
 
 // --------------------------for render deployment------------------------------
 
