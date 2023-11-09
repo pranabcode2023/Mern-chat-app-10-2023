@@ -10,14 +10,6 @@ const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 // const path = require("path");
 const cors = require("cors");
 
-app.use(
-  cors({
-    origin: ["https://mern-chat-app-10-2023-client.vercel.app"],
-    methods: ["POST", "GET"],
-    credentials: true,
-  })
-);
-
 dotenv.config();
 //NOTE - call function to connect MongoDB
 connectMongoDB();
@@ -36,7 +28,13 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
 //NOTE - ----------------vercel deployment ---------------------
-
+app.use(
+  cors({
+    origin: ["https://mern-chat-app-client-two.vercel.app/"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 // const allowedOrigins = [
 //   "http://localhost:3000",
 //   "https://mern-chat-app-10-2023-client.vercel.app",
