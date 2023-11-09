@@ -37,7 +37,7 @@ app.use("/api/message", messageRoutes);
 // );
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://mern-chat-app-10-2023-client.vercel.app",
+  "https://mern-chat-app-client-two.vercel.app",
 
   //NOTE - url put into env file
   // process.env.LOCALHOST_CLIENT,
