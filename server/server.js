@@ -18,9 +18,9 @@ const app = express();
 app.use(express.json());
 
 //NOTE - comented out for render deployment
-// app.get("/", (req, res) => {
-//   res.send("API is Running Successfully");
-// });
+app.get("/", (req, res) => {
+  res.send("API is Running Successfully");
+});
 
 //NOTE - userRoutes, chatroutes
 app.use("/api/user", userRoutes);
@@ -31,7 +31,7 @@ app.use("/api/message", messageRoutes);
 app.use(
   cors({
     origin: ["https://mern-chat-app-client-two.vercel.app/"],
-    methods: ["POST", "GET"],
+    methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
 );
@@ -80,6 +80,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
+
 const server = app.listen(
   5000,
   console.log(`Server started on port ${PORT}`.bgBlue.bold)
