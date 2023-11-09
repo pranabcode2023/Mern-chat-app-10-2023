@@ -7,8 +7,8 @@ const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
-// const path = require("path");
-const cors = require("cors");
+const path = require("path");
+// const cors = require("cors");
 
 dotenv.config();
 //NOTE - call function to connect MongoDB
@@ -18,9 +18,9 @@ const app = express();
 app.use(express.json());
 
 //NOTE - comented out for render deployment
-app.get("/", (req, res) => {
-  res.send("API is Running Successfully");
-});
+// app.get("/", (req, res) => {
+//   res.send("API is Running Successfully");
+// });
 
 //NOTE - userRoutes, chatroutes
 app.use("/api/user", userRoutes);
@@ -28,50 +28,51 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
 //NOTE - ----------------vercel deployment ---------------------
-// app.use(
-//   cors({
-//     origin: ["https://mern-chat-app-client-two.vercel.app"],
-//     methods: ["POST", "GET", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://mern-chat-app-client-two.vercel.app",
+// // app.use(
 
-  //NOTE - url put into env file
-  // process.env.LOCALHOST_CLIENT,
-  // process.env.VERCEL_CLIENT,
-];
+// //   cors({
+// //     origin: ["https://mern-chat-app-client-two.vercel.app"],
+// //     methods: ["POST", "GET", "PUT", "DELETE"],
+// //     credentials: true,
+// //   })
+// // );
+// const allowedOrigins = [
+//   "http://localhost:3000",
+//   "https://mern-chat-app-client-two.vercel.app",
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
+//   //NOTE - url put into env file
+//   // process.env.LOCALHOST_CLIENT,
+//   // process.env.VERCEL_CLIENT,
+// ];
 
-app.use(cors());
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (allowedOrigins.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+// };
+
+// app.use(cors());
 // app.use(cors(corsOptions));
 
 // --------------------------for render deployment------------------------------
 
-// const __dirname1 = path.resolve();
+const __dirname1 = path.resolve();
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname1, "../client/build")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "../client/build")));
 
-//   app.get("*", (req, res) =>
-//     res.sendFile(path.resolve(__dirname1, "../client/build", "index.html"))
-//   );
-// } else {
-//   app.get("/", (req, res) => {
-//     res.send("API is Running Successfully");
-//   });
-// }
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "../client/build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is Running Successfully");
+  });
+}
 
 // --------------------------deployment------------------------------
 
