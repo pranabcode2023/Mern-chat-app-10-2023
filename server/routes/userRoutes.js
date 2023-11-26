@@ -8,9 +8,15 @@ const { protect } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.route("/").get(protect, allUsers);
-router.route("/").post(registerUser);
+//user routes
+router.get("/", protect, allUsers);
+router.post("/", registerUser);
 router.post("/login", authUser);
+
+//NOTE - another method
+// router.route("/").get(protect, allUsers);
+// router.route("/").post(registerUser);
+// router.post("/login", authUser);
 
 //NOTE - in this way you can put multiple endpoint
 // router.route("/").post(registerUser).get(protect, allUsers);
