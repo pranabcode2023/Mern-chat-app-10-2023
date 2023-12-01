@@ -33,7 +33,7 @@ import { getSender } from "../../config/ChatLogic";
 import { Badge } from "antd";
 // import NotificationBadge from "react-notification-badge";
 // import { Effect } from "react-notification-badge";
-
+import { serverURL } from "../../utilis/serverURL";
 const SideMenu = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -79,7 +79,14 @@ const SideMenu = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        // `/api/user/alluser?search=${search}`,
+
+        // `${process.env.REACT_APP_BASE_URL}/api/chat/fetchChats`,
+        `${serverURL}/api/user/alluser?search=${search}`,
+
+        config
+      );
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -92,7 +99,7 @@ const SideMenu = () => {
       });
     }
   };
-  //NOTE - accessChat
+  //NOTE - accessSingleChat
   const accessChat = async (userId) => {
     try {
       setLoadingChat(true);
@@ -103,7 +110,14 @@ const SideMenu = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post("/api/chat", { userId }, config);
+      const { data } = await axios.post(
+        // "/api/chat/accessSingleChat",
+
+        // `${process.env.REACT_APP_BASE_URL}/api/chat/accessSingleChat`,
+        `${serverURL}/api/chat/accessSingleChat`,
+        { userId },
+        config
+      );
       //NOTE - find function / to find the chat and update the chat
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);

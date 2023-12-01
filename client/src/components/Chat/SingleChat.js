@@ -17,9 +17,8 @@ import "../Styles/Styles.css";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import Lottie from "lottie-react";
-
 import animationData from "./../../animations/typing.json";
-
+import { serverURL } from "../../utilis/serverURL";
 const ENDPOINT = "http://localhost:5000";
 // const ENDPOINT = "https://chat-app-rfe4.onrender.com";
 let socket, selectedChatCompare;
@@ -48,7 +47,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        // `/api/message/allMessages/${selectedChat._id}`,
+
+        // `${process.env.REACT_APP_BASE_URL}/api/message/allMessages/${selectedChat._id}`,
+        `${serverURL}/api/message/allMessages/${selectedChat._id}`,
         config
       );
       // console.log(messages);
@@ -81,7 +83,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          // "/api/message/sendMessage",
+
+          // `${process.env.REACT_APP_BASE_URL}/api/message/sendMessage`,
+          `${serverURL}/api/message/sendMessage`,
           {
             content: newMessage,
             chatId: selectedChat._id,

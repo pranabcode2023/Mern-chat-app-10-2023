@@ -20,6 +20,7 @@ import { ChatState } from "../../Context/ChatProvider";
 import UserBadgeItem from "../UserAvatar/UserBadgeItem";
 import axios from "axios";
 import UserListItem from "../UserAvatar/UserListItem";
+import { serverURL } from "../../utilis/serverURL";
 
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,7 +48,14 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        // `/api/user/alluser?search=${search}`,
+
+        // `${process.env.REACT_APP_BASE_URL}/api/user/alluser?search=${search}`,
+        `${serverURL}/api/user/alluser?search=${search}`,
+
+        config
+      );
       console.log(data);
       setLoading(false);
       setSearchResult(data);
@@ -75,7 +83,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         },
       };
       const { data } = await axios.put(
-        `/api/chat/rename`,
+        // `/api/chat/renameGroup`,
+
+        // `${process.env.REACT_APP_BASE_URL}/api/chat/renameGroup`,
+        `${serverURL}/api/chat/renameGroup`,
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -132,7 +143,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         },
       };
       const { data } = await axios.put(
-        `/api/chat/groupadd`,
+        // `/api/chat/addToGroup`,
+
+        // `${process.env.REACT_APP_BASE_URL}/api/chat/addToGroup`,
+        `${serverURL}/api/chat/addToGroup`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -177,7 +191,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         },
       };
       const { data } = await axios.put(
-        `/api/chat/groupremove`,
+        // `/api/chat/removeFromGroup`,
+
+        // `${process.env.REACT_APP_BASE_URL}/api/chat/removeFromGroup`,
+        `${serverURL}/api/chat/removeFromGroup`,
         {
           chatId: selectedChat._id,
           userId: user1._id,

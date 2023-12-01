@@ -8,12 +8,15 @@ const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 const path = require("path");
-// const cors = require("cors");
+const cors = require("cors");
 
 dotenv.config();
+
 //NOTE - call function to connect MongoDB
 connectMongoDB();
+
 const app = express();
+app.use(cors());
 //NOTE - to accept json data
 app.use(express.json());
 
@@ -26,37 +29,6 @@ app.use(express.json());
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
-
-//NOTE - ----------------vercel deployment ---------------------
-// // app.use(
-
-// //   cors({
-// //     origin: ["https://mern-chat-app-client-two.vercel.app"],
-// //     methods: ["POST", "GET", "PUT", "DELETE"],
-// //     credentials: true,
-// //   })
-// // );
-// const allowedOrigins = [
-//   "http://localhost:3000",
-//   "https://mern-chat-app-client-two.vercel.app",
-
-//   //NOTE - url put into env file
-//   // process.env.LOCALHOST_CLIENT,
-//   // process.env.VERCEL_CLIENT,
-// ];
-
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (allowedOrigins.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-// };
-
-// app.use(cors());
-// app.use(cors(corsOptions));
 
 // --------------------------for render deployment------------------------------
 
@@ -82,17 +54,17 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(
-  5000,
-  console.log(`Server started on port ${PORT}`.bgBlue.bold)
-);
+const server = app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`.bgBlue.bold);
+});
 
 //NOTE - Socket io
 const io = require("socket.io")(server, {
   pingTimeout: 70000,
   cors: {
     // origin: ["https://chat-app-rfe4.onrender.com"],
-    origin: ["http://localhost:3000"],
+    // origin: ["http://localhost:3000"],
+    origin: true,
   },
 });
 

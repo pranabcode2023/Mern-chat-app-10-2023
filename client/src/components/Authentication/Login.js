@@ -13,6 +13,7 @@ import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { ChatState } from "./../../Context/ChatProvider";
+import { serverURL } from "../../utilis/serverURL";
 
 const Login = () => {
   const handleClick = () => setShow(!show);
@@ -46,11 +47,14 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "/api/user/login",
+        // "http://localhost:5000/api/user/login",
+
+        // `${process.env.REACT_APP_BASE_URL}/api/user/login`,
+        `${serverURL}/api/user/login`,
         { email, password },
         config
       );
-
+      console.log(data);
       toast({
         title: "Login Successful",
         status: "success",

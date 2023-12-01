@@ -7,8 +7,8 @@ const {
 } = require("../controllers/messageControllers");
 
 //message route
-router.post("/", protect, sendMessage);
-router.get("/:chatId", protect, allMessages);
+router.post("/sendMessage", protect, sendMessage);
+router.get("/allMessages/:chatId", protect, allMessages);
 
 //NOTE - another method
 // router.route("/").post(protect, sendMessage);
