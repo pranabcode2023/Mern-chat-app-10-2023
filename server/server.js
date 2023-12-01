@@ -20,17 +20,14 @@ connectMongoDB();
 const app = express();
 
 //middelwares
+// app.use(cors());
 //NOTE - to accept json data
 app.use(express.json());
 
-//NOTE - userRoutes, chatroutes
-app.use("/api/user", userRoutes);
-app.use("/api/chat", chatRoutes);
-app.use("/api/message", messageRoutes);
-
-app.get("/", (req, res) => {
-  res.send("API is Running Successfully");
-});
+//comented out for render deployment
+// app.get("/", (req, res) => {
+//   res.send("API is Running Successfully");
+// });
 
 // --------------------------for render deployment------------------------------
 
@@ -66,17 +63,22 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
     }
   },
+  credentials: true, // enable credentials (cookies, authorization headers, etc.)
 };
 
-app.use(cors());
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 //*********************vercel deployment *********************************/
+
+//NOTE - userRoutes, chatroutes
+app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 
 //NOTE - error handling
 app.use(notFound);
@@ -88,13 +90,22 @@ const server = app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`.bgBlue.bold);
 });
 
-//NOTE - Socket io
+//NOTE - Socket io config
+
+// const io = require("socket.io")(server, {
+//   pingTimeout: 70000,
+//   cors: {
+//     // origin: ["https://chat-app-rfe4.onrender.com"],
+//     // origin: ["http://localhost:3000"],
+//     origin: true,
+//   },
+// });
+
 const io = require("socket.io")(server, {
-  pingTimeout: 70000,
   cors: {
-    // origin: ["https://chat-app-rfe4.onrender.com"],
-    // origin: ["http://localhost:3000"],
-    origin: true,
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
@@ -132,9 +143,14 @@ io.on("connection", (socket) => {
     });
   });
   //NOTE - to save bandwith
-  socket.off("setup", () => {
-    console.log("USER DISCONNECTED");
-    socket.leave(userData._id);
+  // socket.off("setup", () => {
+  //   console.log("USER DISCONNECTED");
+  //   socket.leave(userData._id);
+  // });
+
+  // Disconnect event
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
   });
 });
 
