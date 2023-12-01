@@ -20,7 +20,7 @@ import Lottie from "lottie-react";
 import animationData from "./../../animations/typing.json";
 import { serverURL } from "../../utilis/serverURL";
 const ENDPOINT = "http://localhost:5000";
-// const ENDPOINT = "https://chat-app-rfe4.onrender.com";
+// const ENDPOINT = "https://mern-chat-app-client-one.vercel.app";
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {

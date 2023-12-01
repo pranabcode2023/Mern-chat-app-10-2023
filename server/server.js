@@ -59,7 +59,7 @@ app.use("/api/message", messageRoutes);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://ecommerce-mern-stack-app-vercel-client.vercel.app",
+  "https://mern-chat-app-client-one.vercel.app",
 
   //NOTE - url put into env file
   // process.env.LOCALHOST_CLIENT,
