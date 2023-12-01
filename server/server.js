@@ -7,15 +7,19 @@ const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
-const path = require("path");
+// const path = require("path");
 const cors = require("cors");
 
+//configure dotenv
 dotenv.config();
 
 //NOTE - call function to connect MongoDB
 connectMongoDB();
 
+//rest object
 const app = express();
+
+//middelwares
 app.use(cors());
 //NOTE - to accept json data
 app.use(express.json());
@@ -32,21 +36,47 @@ app.use("/api/message", messageRoutes);
 
 // --------------------------for render deployment------------------------------
 
-const __dirname1 = path.resolve();
+// const __dirname1 = path.resolve();
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "../client/build")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname1, "../client/build")));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname1, "../client/build", "index.html"))
-  );
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is Running Successfully");
-  });
-}
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.resolve(__dirname1, "../client/build", "index.html"))
+//   );
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("API is Running Successfully");
+//   });
+// }
 
-// --------------------------deployment------------------------------
+// --------------------------vercel deployment------------------------------
+
+//REVIEW[epic=deploy, seq=2] once the client is deployed we can add the URL to the list of allowed Origins
+
+//REVIEW[epic=deploy, seq=3] the first origin should be the localhost port our client runs on. The second one, vercel's URL for our client
+// console.log('LOCALHOST_CLIENT', process.env.LOCALHOST_CLIENT)
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://ecommerce-mern-stack-app-vercel-client.vercel.app",
+
+  //NOTE - url put into env file
+  // process.env.LOCALHOST_CLIENT,
+  // process.env.VERCEL_CLIENT,
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+app.use(cors(corsOptions));
+//*********************vercel deployment *********************************/
 
 //NOTE - error handling
 app.use(notFound);
