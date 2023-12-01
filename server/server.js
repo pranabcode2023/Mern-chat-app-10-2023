@@ -20,19 +20,17 @@ connectMongoDB();
 const app = express();
 
 //middelwares
-app.use(cors());
 //NOTE - to accept json data
 app.use(express.json());
-
-//NOTE - comented out for render deployment
-// app.get("/", (req, res) => {
-//   res.send("API is Running Successfully");
-// });
 
 //NOTE - userRoutes, chatroutes
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+
+app.get("/", (req, res) => {
+  res.send("API is Running Successfully");
+});
 
 // --------------------------for render deployment------------------------------
 
@@ -75,7 +73,9 @@ const corsOptions = {
     }
   },
 };
-app.use(cors(corsOptions));
+
+app.use(cors());
+// app.use(cors(corsOptions));
 //*********************vercel deployment *********************************/
 
 //NOTE - error handling
