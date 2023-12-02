@@ -144,10 +144,10 @@ io.on("connection", (socket) => {
     });
   });
 
-  // Disconnect event
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
+  // // Disconnect event
+  // socket.on("disconnect", () => {
+  //   console.log("User disconnected");
+  // });
 
   //NOTE - to save bandwith
   socket.off("setup", () => {
