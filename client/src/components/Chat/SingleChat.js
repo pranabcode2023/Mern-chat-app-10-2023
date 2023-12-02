@@ -19,8 +19,10 @@ import io from "socket.io-client";
 import Lottie from "lottie-react";
 import animationData from "./../../animations/typing.json";
 import { serverURL } from "../../utilis/serverURL";
-const ENDPOINT = "http://localhost:5000";
-// const ENDPOINT = "https://mern-chat-app-client-one.vercel.app";
+
+const ENDPOINT = `${serverURL}`;
+// const ENDPOINT = "http://localhost:5000";
+// const ENDPOINT = "https://mern-chat-app-server-chi.vercel.app";
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {

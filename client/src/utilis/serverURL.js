@@ -13,6 +13,6 @@
 const serverURL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000"
-    : "https://ecommerce-mern-stack-app-vercel-server.vercel.app";
+    : "https://mern-chat-app-server-chi.vercel.app";
 
 export { serverURL };
