@@ -92,23 +92,23 @@ const server = app.listen(PORT, () => {
 
 //NOTE - Socket io config
 
-// const io = require("socket.io")(server, {
-//   pingTimeout: 70000,
-//   cors: {
-//     origin: ["https://mern-chat-app-client-one.vercel.app"],
-//     origin: ["http://localhost:3000"],
-//     // origin: true,
-//     credentials: true,
-//   },
-// });
-
 const io = require("socket.io")(server, {
+  pingTimeout: 70000,
   cors: {
     origin: allowedOrigins,
-    methods: ["GET", "POST"],
+    // origin: ["https://mern-chat-app-client-one.vercel.app", "http://localhost:3000"],
+    // origin: true,
     credentials: true,
   },
 });
+
+// const io = require("socket.io")(server, {
+//   cors: {
+//     origin: allowedOrigins,
+//     methods: ["GET", "POST"],
+//     credentials: true,
+//   },
+// });
 
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
