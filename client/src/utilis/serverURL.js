@@ -3,16 +3,16 @@
 // console.log("firimport.meta.env.MODEst", import.meta.env.MODE);
 
 //NOTE for apps created with CRA, the env variable will be process.env.NODE_ENV
-// const serverURL =
-//   process.env.NODE_ENV === "development"
-// /? `${process.env.REACT_APP_LOCALHOST_SERVER}`
-//     : `${process.env.REACT_APP_VERCEL_SERVER}`;
-
-// export { serverURL };
-
 const serverURL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:5000"
-    : "https://mern-chat-app-server-chi.vercel.app";
+    ? process.env.REACT_APP_LOCALHOST_SERVER
+    : process.env.REACT_APP_VERCEL_SERVER;
 
 export { serverURL };
+
+// const serverURL =
+//   process.env.NODE_ENV === "development"
+//     ? "http://localhost:5000"
+//     : "https://mern-chat-app-server-chi.vercel.app";
+
+// export { serverURL };
