@@ -20,7 +20,7 @@ connectMongoDB();
 const app = express();
 
 //middelwares
-app.use(cors());
+// app.use(cors());
 //NOTE - to accept json data
 app.use(express.json());
 
