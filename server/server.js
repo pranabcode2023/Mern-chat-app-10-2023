@@ -20,7 +20,7 @@ connectMongoDB();
 const app = express();
 
 //middelwares
-// app.use(cors());
+app.use(cors());
 //NOTE - to accept json data
 app.use(express.json());
 
@@ -66,18 +66,18 @@ const allowedOrigins = [
   process.env.VERCEL_CLIENT,
 ];
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true, // enable credentials (cookies, authorization headers, etc.)
-};
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true, // enable credentials (cookies, authorization headers, etc.)
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 //*********************vercel deployment *********************************/
 
 //NOTE - error handling
