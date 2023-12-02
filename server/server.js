@@ -98,6 +98,7 @@ const server = app.listen(PORT, () => {
 //     // origin: ["https://chat-app-rfe4.onrender.com"],
 //     // origin: ["http://localhost:3000"],
 //     origin: true,
+//     credentials: true,
 //   },
 // });
 
@@ -143,10 +144,10 @@ io.on("connection", (socket) => {
     });
   });
   //NOTE - to save bandwith
-  // socket.off("setup", () => {
-  //   console.log("USER DISCONNECTED");
-  //   socket.leave(userData._id);
-  // });
+  socket.off("setup", () => {
+    console.log("USER DISCONNECTED");
+    socket.leave(userData._id);
+  });
 
   // Disconnect event
   socket.on("disconnect", () => {
