@@ -58,12 +58,12 @@ app.get("/", (req, res) => {
 // console.log('LOCALHOST_CLIENT', process.env.LOCALHOST_CLIENT)
 
 const allowedOrigins = [
-  "https://mern-chat-app-client-one.vercel.app",
-  "http://localhost:3000",
+  // "https://mern-chat-app-client-one.vercel.app",
+  // "http://localhost:3000",
 
   //NOTE - url put into env file
-  // process.env.LOCALHOST_CLIENT,
-  // process.env.VERCEL_CLIENT,
+  process.env.LOCALHOST_CLIENT,
+  process.env.VERCEL_CLIENT,
 ];
 
 const corsOptions = {
