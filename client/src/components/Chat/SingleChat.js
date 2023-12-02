@@ -113,11 +113,30 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   useEffect(() => {
+    console.log("Setting up socket connection...");
     socket = io(ENDPOINT);
+
+    socket.on("connect", () => {
+      console.log("WebSocket connected!");
+    });
+
+    socket.on("disconnect", () => {
+      console.log("WebSocket disconnected!");
+    });
+
+    socket.on("error", (error) => {
+      console.error("WebSocket error:", error);
+    });
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
+
+    // Clean up socket connection on component unmount
+    return () => {
+      socket.disconnect();
+    };
+
     //eslint-disable-next-line
   }, []);
 
