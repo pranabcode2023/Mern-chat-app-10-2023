@@ -98,7 +98,7 @@ const io = require("socket.io")(server, {
     origin: allowedOrigins,
     // origin: ["https://mern-chat-app-client-one.vercel.app", "http://localhost:3000"],
     // origin: true,
-    methods: ["GET", "POST"],
+    // methods: ["GET", "POST"],
     credentials: true,
   },
 });
