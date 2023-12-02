@@ -20,7 +20,7 @@ connectMongoDB();
 const app = express();
 
 //middelwares
-// app.use(cors());
+app.use(cors());
 //NOTE - to accept json data
 app.use(express.json());
 
@@ -92,23 +92,23 @@ const server = app.listen(PORT, () => {
 
 //NOTE - Socket io config
 
-// const io = require("socket.io")(server, {
-//   pingTimeout: 70000,
-//   cors: {
-//     // origin: ["https://chat-app-rfe4.onrender.com"],
-//     // origin: ["http://localhost:3000"],
-//     origin: true,
-//     credentials: true,
-//   },
-// });
-
 const io = require("socket.io")(server, {
+  pingTimeout: 70000,
   cors: {
-    origin: allowedOrigins,
-    methods: ["GET", "POST"],
+    origin: ["https://mern-chat-app-client-one.vercel.app"],
+    origin: ["http://localhost:3000"],
+    // origin: true,
     credentials: true,
   },
 });
+
+// const io = require("socket.io")(server, {
+//   cors: {
+//     origin: allowedOrigins,
+//     methods: ["GET", "POST"],
+//     credentials: true,
+//   },
+// });
 
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
@@ -143,15 +143,16 @@ io.on("connection", (socket) => {
       socket.in(user._id).emit("message recieved", newMessageRecieved);
     });
   });
-  //NOTE - to save bandwith
-  socket.off("setup", () => {
-    console.log("USER DISCONNECTED");
-    socket.leave(userData._id);
-  });
 
   // Disconnect event
   socket.on("disconnect", () => {
     console.log("User disconnected");
+  });
+
+  //NOTE - to save bandwith
+  socket.off("setup", () => {
+    console.log("USER DISCONNECTED");
+    socket.leave(userData._id);
   });
 });
 
