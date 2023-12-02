@@ -21,9 +21,9 @@ const Login = () => {
   const history = useHistory();
   const [show, setShow] = useState(false);
 
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
 
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState("");
   const [Loading, setLoading] = useState(false);
   const { setUser } = ChatState();
   const submitHandler = async () => {
