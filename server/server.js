@@ -24,10 +24,15 @@ const app = express();
 //NOTE - to accept json data
 app.use(express.json());
 
-//comented out for render deployment
-// app.get("/", (req, res) => {
-//   res.send("API is Running Successfully");
-// });
+//NOTE - Routes
+app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
+
+//rest api
+app.get("/", (req, res) => {
+  res.send("API is Running Successfully");
+});
 
 // --------------------------for render deployment------------------------------
 
@@ -74,11 +79,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 //*********************vercel deployment *********************************/
-
-//NOTE - userRoutes, chatroutes
-app.use("/api/user", userRoutes);
-app.use("/api/chat", chatRoutes);
-app.use("/api/message", messageRoutes);
 
 //NOTE - error handling
 app.use(notFound);
