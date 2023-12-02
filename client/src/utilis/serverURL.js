@@ -12,7 +12,7 @@ export { serverURL };
 
 // const serverURL =
 //   process.env.NODE_ENV === "development"
-//     ? "http://localhost:5000"
+//     /? "http://localhost:5000"
 //     : "https://mern-chat-app-server-chi.vercel.app";
 
 // export { serverURL };
