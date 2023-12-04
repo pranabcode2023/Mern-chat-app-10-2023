@@ -161,7 +161,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         setMessages([...messages, newMessageRecieved]);
       }
     });
-  });
+    //eslint-disable-next-line
+  }, [messages, selectedChatCompare]);
+
   const typinMessageHandler = (e) => {
     setNewMessage(e.target.value);
 
