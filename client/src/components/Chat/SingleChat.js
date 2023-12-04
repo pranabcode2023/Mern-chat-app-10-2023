@@ -142,14 +142,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("stop typing", () => setIsTyping(false));
 
     // Clean up socket connection on component unmount
-    return () => {
-      socket.disconnect();
-    };
+    // return () => {
+    //   socket.disconnect();
+    // };
 
     //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
+    console.log("Fetching messages...");
     fetchMessages();
 
     selectedChatCompare = selectedChat;
