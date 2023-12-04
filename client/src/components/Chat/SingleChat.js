@@ -23,7 +23,8 @@ import { serverURL } from "../../utilis/serverURL";
 // const ENDPOINT = `${serverURL}`;
 // const ENDPOINT = "http://localhost:5000";
 const ENDPOINT = "https://mern-chat-app-server-chi.vercel.app";
-let socket, selectedChatCompare;
+// let socket, selectedChatCompare;
+let selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
@@ -36,6 +37,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const { user, selectedChat, setSelectedChat, notification, setNotification } =
     ChatState();
+
+  const socket = io(ENDPOINT, {
+    withCredentials: true,
+    transports: ["websocket", "polling"],
+  });
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -114,7 +120,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     console.log("Setting up socket connection...");
-    socket = io(ENDPOINT);
+    // socket = io(ENDPOINT);
 
     socket.on("connect", () => {
       console.log("WebSocket connected!");
