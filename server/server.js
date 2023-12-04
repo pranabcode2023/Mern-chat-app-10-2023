@@ -97,10 +97,11 @@ const io = require("socket.io")(server, {
   cors: {
     origin: allowedOrigins,
     // origin: ["https://mern-chat-app-client-one.vercel.app", "http://localhost:3000"],
-    origin: true,
+    // origin: true,
     methods: ["GET", "POST"],
     credentials: true,
   },
+  transports: ["websocket"], // Use only WebSocket transport
 });
 
 // const io = require("socket.io")(server, {
