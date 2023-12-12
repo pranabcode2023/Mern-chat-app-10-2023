@@ -24,8 +24,8 @@ const ENDPOINT = `${serverURL}`;
 
 // const ENDPOINT = "http://localhost:5000";
 // const ENDPOINT = "https://mern-chat-app-server-chi.vercel.app";
-// let socket, selectedChatCompare;
-let selectedChatCompare;
+let socket, selectedChatCompare;
+// let selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
@@ -40,10 +40,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     ChatState();
 
   // Initialize socket outside of useEffect
-  const socket = io(ENDPOINT, {
-    withCredentials: true,
-    transports: ["websocket", "polling"],
-  });
+  // const socket = io(ENDPOINT, {
+  //   withCredentials: true,
+  //   transports: ["websocket", "polling"],
+  // });
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -122,19 +122,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     console.log("Setting up socket connection...");
-    // socket = io(ENDPOINT);
+    socket = io(ENDPOINT);
 
-    socket.on("connect", () => {
-      console.log("WebSocket connected!");
-    });
+    // socket.on("connect", () => {
+    //   console.log("WebSocket connected!");
+    // });
 
-    socket.on("disconnect", () => {
-      console.log("WebSocket disconnected!");
-    });
+    // socket.on("disconnect", () => {
+    //   console.log("WebSocket disconnected!");
+    // });
 
-    socket.on("error", (error) => {
-      console.error("WebSocket error:", error);
-    });
+    // socket.on("error", (error) => {
+    //   console.error("WebSocket error:", error);
+    // });
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
