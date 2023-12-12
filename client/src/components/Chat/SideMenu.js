@@ -159,13 +159,13 @@ const SideMenu = () => {
         </Text>
         <div>
           <Menu>
-            <MenuButton p={1}>
+            <MenuButton p={2}>
               {/* <NotificationBadge
                 count={notification.length}
                 effect={Effect.SCALE}
               /> */}
 
-              <Badge count={notification?.length} showZero>
+              <Badge count={notification.length} showZero>
                 <BellIcon color="black" fontSize="2xl" m={1} />
               </Badge>
             </MenuButton>
